@@ -1,7 +1,7 @@
 const prompt = require('inquirer').createPromptModule()
 const fs = require('fs')
 
-const api = require('./utils/api.js')
+const api = require('./utils/github-api.js')
 const generateMarkdown = require('./utils/generateMarkdown.js')
 
 const writeToFile = (fileName, data) => {
@@ -32,17 +32,7 @@ const init = async _ => {
   } while (!rmObject)
   // const ghApi = await api.getUser(rmUser)
   Object.assign(rmObject, await prompt([
-    // {
-    //   type: 'input',
-    //   name: 'rmTitle',
-    //   message: 'What is the project title?'
-    // },
-    // {
-    //   type: 'input',
-    //   name: 'rmDesc',
-    //   message: 'What is the project description?'
-    // },
-    {
+{
       type: 'input',
       name: 'inst',
       message: 'What are the installation instructions?'
@@ -52,11 +42,18 @@ const init = async _ => {
       name: 'use',
       message: 'What is the usage description?'
     },
-    // {
-    //   type: 'input',
-    //   name: 'rmLic',
-    //   message: 'What is the license?'
-    // },
+    {
+      type: 'input',
+      name: 'toc',
+      message: 'What are the table of contents?'
+    },
+    {
+      type: 'checkbox',
+      name: 'cb',
+      choices: ['Apache License 2.0', 'GNU LGPLv3', 'GNU AGPLv3', 'MIT License'],
+      message: 'Which licenses did you use?'
+    },
+ 
     {
       type: 'input',
       name: 'con',
