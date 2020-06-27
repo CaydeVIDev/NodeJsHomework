@@ -5,7 +5,7 @@ const api = require('./utils/github-api.js')
 const generateMarkdown = require('./utils/generateMarkdown.js')
 
 const writeToFile = (fileName, data) => {
-  fs.writeFile(fileName + '.md', data, error => error ? console.error(error) : console.log(`${fileName + '.md'} generated!`))
+  fs.writeFile(fileName, data, error => error ? console.error(error) : console.log(`${fileName} generated!`))
 }
 
 const init = async _ => {
@@ -24,11 +24,13 @@ const init = async _ => {
       }
     ])
     rmObject = await api.getUser(rmUser, rmRepo)
-    if (!rmObject) {
-      console.error('Repo not found!')
-    } else {
+    try {
       console.log(`${rmObject.fullName} found!`)
+    } catch (error) {
+      console.error('Repo not found!')
+      
     }
+  
   } while (!rmObject)
   // const ghApi = await api.getUser(rmUser)
   Object.assign(rmObject, await prompt([
@@ -48,9 +50,9 @@ const init = async _ => {
       message: 'What are the table of contents?'
     },
     {
-      type: 'checkbox',
+      type: 'list',
       name: 'cb',
-      choices: ['Apache License 2.0', 'GNU LGPLv3', 'GNU AGPLv3', 'MIT License'],
+      choices: ['Apache', 'GNU', 'MIT'],
       message: 'Which licenses did you use?'
     },
  
@@ -70,7 +72,7 @@ const init = async _ => {
       message: 'Any questions?'
     }
   ]))
-  writeToFile(rmObject.title, await generateMarkdown(rmObject))
+  writeToFile("README.md", await generateMarkdown(rmObject))
 }
 
 init()

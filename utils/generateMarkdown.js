@@ -2,21 +2,21 @@ const generateMarkdown = data => {
   // return JSON.stringify(data)
   return `
 # ${data.title.toUpperCase()}
-![License: ${(data.lic) ? data.lic : 'None'}](https://img.shields.io/github/languages/top/kikaiaku/readmegen.io)
+[![GitHub license](https://img.shields.io/badge/License-${data.cb}-blue.svg)]
 _Repo by ${data.name.toUpperCase()}_
-__Installation:__
+## Installation:
 ${data.inst}
-__Description:__
+## Description:
 ${data.use}
-__Table of contents:__
+## Table of contents:
 ${data.toc}
-__licence:__
+## licence:
 ${data.cb}
-__Contributors:__
+## Contributors:
 ${data.con}
-__Tests:__
+## Tests:
 ${data.test}
-__Questions:__
+## Questions:
 ${data.qs}
 `
 }
